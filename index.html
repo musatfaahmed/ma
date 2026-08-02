@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>Mostafa Style Caption</title>
+    <style id="hostStyle"></style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&family=Amiri:wght@400;700&family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body class="adobe-dark" onload="bootPanel()">
+
+<!-- ═══════════════ APP LAYOUT ═══════════════ -->
+<div class="app-layout">
+
+    <!-- ═══════════════ SIDEBAR ═══════════════ -->
+    <div class="sidebar">
+        <div class="sidebar-logo">M</div>
+        <nav class="sidebar-nav">
+            <div class="nav-item active" data-page="dashboard" onclick="navigateTo('dashboard')" title="لوحة المعلومات">
+                🏠<span class="nav-tooltip">لوحة المعلومات</span>
+            </div>
+            <div class="nav-item" data-page="generate" onclick="navigateTo('generate')" title="إنشاء الكابشن">
+                🎬<span class="nav-tooltip">إنشاء الكابشن</span>
+            </div>
+            <div class="nav-item" data-page="styles" onclick="navigateTo('styles')" title="الأنماط">
+                🎨<span class="nav-tooltip">الأنماط</span>
+            </div>
+            <div class="nav-item" data-page="animations" onclick="navigateTo('animations')" title="الحركات">
+                ✨<span class="nav-tooltip">الحركات</span>
+            </div>
+            <div class="nav-item" data-page="settings" onclick="navigateTo('settings')" title="الإعدادات">
+                ⚙️<span class="nav-tooltip">الإعدادات</span>
+            </div>
+            <div class="nav-item" data-page="statistics" onclick="navigateTo('statistics')" title="الإحصائيات">
+                📊<span class="nav-tooltip">الإحصائيات</span>
+            </div>
+            <div class="nav-item" data-page="about" onclick="navigateTo('about')" title="حول الإضافة">
+                ℹ️<span class="nav-tooltip">حول الإضافة</span>
+            </div>
+        </nav>
+    </div>
+
+    <!-- ═══════════════ MAIN AREA ═══════════════ -->
+    <div class="main-area">
+
+        <!-- Header -->
+        <div class="header">
+            <div class="header-right">
+                <span class="header-title">MostafaStyleCaption</span>
+            </div>
+            <div class="header-left">
+                <div class="header-badge offline"><span class="dot"></span>متصلاً بـ Premiere</div>
+                <div class="header-badge version">v1.0</div>
+                <div class="header-badge" id="header_status"><span class="dot" id="header_status_dot"></span><span id="header_status_text">جاهز</span></div>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content-area">
+
+            <!-- ─── DASHBOARD ─── -->
+            <div class="page-section active" id="page_dashboard">
+                <div class="section-title"><span class="title-icon">🏠</span>لوحة المعلومات</div>
+
+                <div class="dashboard-grid">
+                    <div class="stat-card"><div class="stat-label">📁 اسم المشروع</div><div class="stat-value" id="dash_project">—</div></div>
+                    <div class="stat-card"><div class="stat-label">🎬 اسم السيكونس</div><div class="stat-value" id="dash_sequence">—</div></div>
+                    <div class="stat-card"><div class="stat-label">⏱ مدة الفيديو</div><div class="stat-value" id="dash_duration">—</div></div>
+                    <div class="stat-card"><div class="stat-label">🌐 لغة الكابشن</div><div class="stat-value" id="dash_language">اكتشاف تلقائي</div></div>
+                    <div class="stat-card"><div class="stat-label">🤖 موديل Whisper</div><div class="stat-value" id="dash_model">أساسي</div></div>
+                    <div class="stat-card"><div class="stat-label">📡 حالة البرنامج</div><div class="stat-value" id="dash_status">جاهز</div></div>
+                    <div class="stat-card"><div class="stat-label">🕐 وقت آخر عملية</div><div class="stat-value" id="dash_lastop">—</div></div>
+                    <div class="stat-card"><div class="stat-label">💻 وضع التشغيل</div><div class="stat-value">CPU — بدون إنترنت</div></div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header"><div class="card-icon">🛡️</div>
+                        <div><div class="card-title">فحص النظام</div><div class="card-desc">حالة المكونات الأساسية</div></div>
+                    </div>
+                    <div class="diag-row" id="diag_ffmpeg"><span class="diag-dot"></span> FFmpeg: جاري الفحص...</div>
+                    <div class="diag-row" id="diag_whisper"><span class="diag-dot"></span> Whisper: جاري الفحص...</div>
+                    <div class="diag-row" id="diag_model"><span class="diag-dot"></span> النموذج: جاري الفحص...</div>
+                </div>
+            </div>
+
+            <!-- ─── GENERATE ─── -->
+            <div class="page-section" id="page_generate">
+                <div class="section-title"><span class="title-icon">🎬</span>إنشاء الكابشن</div>
+
+                <div class="card" id="active_seq_card">
+                    <div class="section-sub" id="active_seq">السيكونس النشط: —</div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header"><div class="card-icon">🧠</div>
+                        <div><div class="card-title">إعدادات التفريغ</div><div class="card-desc">Whisper.cpp — بدون إنترنت</div></div>
+                    </div>
+                    <div class="field">
+                        <label>نموذج Whisper:</label>
+                        <select id="model_size">
+                            <option value="tiny">Tiny — سريع (دقة أقل)</option>
+                            <option value="base" selected>Base — متوازن (موصى به)</option>
+                            <option value="small">Small — دقيق</option>
+                            <option value="medium">Medium — دقيق جداً</option>
+                            <option value="large-v3">Large v3 — أقصى دقة</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>لغة الكلام:</label>
+                        <select id="language">
+                            <option value="auto" selected>اكتشاف تلقائي</option>
+                            <option value="ar">العربية</option>
+                            <option value="en">English</option>
+                            <option value="fr">Français</option>
+                            <option value="de">Deutsch</option>
+                            <option value="es">Español</option>
+                            <option value="tr">Türkçe</option>
+                            <option value="ru">Русский</option>
+                        </select>
+                    </div>
+                    <button class="btn-base btn-primary btn-block" id="btn_generate_captions" onclick="generateCaptions()"> 🚀 توليد الترجمات (بدون إنترنت)</button>
+                </div>
+
+                <div class="progress-section" id="progress_section">
+                    <div class="progress-bar-track"><div class="progress-bar" id="progress_bar"></div></div>
+                    <div class="progress-text" id="progress_text">0%</div>
+                </div>
+
+                <div class="status-area" id="status_area"><div id="status_message"></div></div>
+
+                <div class="caption-preview" id="caption_preview">
+                    <div class="caption-preview-header"><span>معاينة الكابشن</span><span class="text-muted" id="caption_preview_count"></span></div>
+                    <div class="caption-preview-list" id="caption_preview_list"></div>
+                </div>
+
+                <button class="btn-base btn-success btn-block mt12" id="btn_import_captions" style="display:none" onclick="importCaptionsToPremiere()"> 📥 إستيراد الترجمات إلى Premiere</button>
+
+                <!-- ═══ EDITOR PANEL ═══ -->
+                <div class="editor-panel" id="editor_panel"></div>
+            </div>
+
+            <!-- ─── STYLES ─── -->
+            <div class="page-section" id="page_styles">
+                <div class="section-title"><span class="title-icon">🎨</span>أنماط الكابشن</div>
+
+                <div class="card">
+                    <div class="card-header"><div class="card-icon">👁</div><div><div class="card-title">معاينة مباشرة</div><div class="card-desc">تُطبَّق التغييرات فوراً على الكابشن المحدد</div></div></div>
+                    <div id="styles_preview_box" class="editor-preview-box">
+                        <span class="editor-preview-label">معاينة</span>
+                        <div id="styles_preview_text" class="editor-active-text">نص تجريبي للمعاينة</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="field">
+                        <label>نوع الخط</label>
+                        <select id="font_family" onchange="applyFont()">
+                            <option value="Segoe UI">Segoe UI</option>
+                            <option value="Arial">Arial</option>
+                            <option value="Tahoma">Tahoma</option>
+                            <option value="Arial Black" style="font-weight:900">Arial Black</option>
+                            <option value="Impact" style="font-weight:900">Impact</option>
+                            <option value="Trebuchet MS">Trebuchet MS</option>
+                            <option value="Verdana">Verdana</option>
+                            <option value="Georgia">Georgia</option>
+                            <option value="Times New Roman">Times New Roman</option>
+                            <option value="Courier New">Courier New</option>
+                            <option value="Cairo">Cairo (عربي)</option>
+                            <option value="Amiri" style="font-weight:400">Amiri (عربي)</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>الحجم: <span id="font_size_value">24px</span></label>
+                        <input type="range" id="font_size" oninput="applyFont()" min="10" max="72" value="24">
+                    </div>
+                    <div class="field">
+                        <label>السُمك</label>
+                        <select id="font_weight" onchange="applyFont()">
+                            <option value="300">فاتح (Light)</option>
+                            <option value="400" selected>عادي (Regular)</option>
+                            <option value="600">شبه عريض (SemiBold)</option>
+                            <option value="700">عريض (Bold)</option>
+                            <option value="900">ثقيل (Black)</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>لون النص</label>
+                        <input type="color" id="text_color" oninput="applyColor()" value="#ffffff">
+                    </div>
+                </div>
+            </div>
+
+            <!-- ─── ANIMATIONS ─── -->
+            <div class="page-section" id="page_animations">
+                <div class="section-title"><span class="title-icon">✨</span>حركات الكابشن</div>
+
+                <div class="card">
+                    <div class="card-header"><div class="card-icon">👁</div><div><div class="card-title">معاينة مباشرة</div><div class="card-desc">اختر حركة وشاهد النتيجة فوراً</div></div></div>
+                    <div id="anims_preview_box" class="editor-preview-box">
+                        <span class="editor-preview-label">معاينة</span>
+                        <div id="anims_preview_text" class="editor-active-text">نص تجريبي للحركة</div>
+                    </div>
+                    <div class="anim-grid mt8" id="anims_grid"></div>
+                    <div class="text-muted mt8" style="font-size:11px">تُطبَّق هذه الحركات تلقائياً عند استيراد الكابشن إلى Premiere.</div>
+                </div>
+            </div>
+
+            <!-- ─── SETTINGS ─── -->
+            <div class="page-section" id="page_settings">
+                <div class="section-title"><span class="title-icon">⚙️</span>الإعدادات</div>
+
+                <div class="card">
+                    <div class="card-header"><div class="card-icon">🎨</div><div><div class="card-title">المظهر</div></div></div>
+                    <div class="theme-grid" id="theme_grid">
+                        <div class="theme-card active" onclick="setTheme('adobe-dark')"><div class="theme-swatch" style="background:#1f1f1f">🌑</div><div class="theme-name">Adobe Dark</div></div>
+                        <div class="theme-card" onclick="setTheme('purple-neon')"><div class="theme-swatch" style="background:#171233">💜</div><div class="theme-name">Purple Neon</div></div>
+                        <div class="theme-card" onclick="setTheme('blue-ocean')"><div class="theme-swatch" style="background:#10203a">🌊</div><div class="theme-name">Blue Ocean</div></div>
+                        <div class="theme-card" onclick="setTheme('orange-sunset')"><div class="theme-swatch" style="background:#331a0b">🌅</div><div class="theme-name">Orange Sunset</div></div>
+                        <div class="theme-card" onclick="setTheme('emerald-green')"><div class="theme-swatch" style="background:#0b2419">💚</div><div class="theme-name">Emerald Green</div></div>
+                        <div class="theme-card" onclick="setTheme('cyber-cyan')"><div class="theme-swatch" style="background:#06201a">🌀</div><div class="theme-name">Cyber Cyan</div></div>
+                        <div class="theme-card" onclick="setTheme('classic-dark')"><div class="theme-swatch" style="background:#111">🖤</div><div class="theme-name">Classic Dark</div></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header"><div class="card-icon">🌐</div><div><div class="card-title">تفضيلات عامة</div></div></div>
+                    <div class="field"><label>لغة الواجهة</label><select id="ui_language"><option value="ar">العربية</option><option value="en">English</option></select></div>
+                    <div class="field"><label>الخط الافتراضي</label><select id="default_font"><option value="Segoe UI">Segoe UI</option><option value="Arial">Arial</option><option value="Tahoma">Tahoma</option><option value="Cairo">Cairo (عربي)</option></select></div>
+                    <div class="field"><label>موديل Whisper الافتراضي</label><select id="default_model"><option value="tiny">Tiny</option><option value="base" selected>Base</option><option value="small">Small</option></select></div>
+                </div>
+            </div>
+
+            <!-- ─── STATISTICS ─── -->
+            <div class="page-section" id="page_statistics">
+                <div class="section-title"><span class="title-icon">📊</span>الإحصائيات</div>
+                <div class="statistics-grid">
+                    <div class="stat-card"><div class="stat-value" id="stat_words">0</div><div class="stat-label">عدد الكلمات</div></div>
+                    <div class="stat-card"><div class="stat-value" id="stat_lines">0</div><div class="stat-label">عدد الأسطر</div></div>
+                    <div class="stat-card"><div class="stat-value" id="stat_duration">0:00</div><div class="stat-label">مدة الفيديو</div></div>
+                    <div class="stat-card"><div class="stat-value" id="stat_clips">0</div><div class="stat-label">عدد المقاطع</div></div>
+                </div>
+                <div class="card"><div class="section-sub text-muted" id="stat_detail">—</div></div>
+            </div>
+
+            <!-- ─── ABOUT ─── -->
+            <div class="page-section" id="page_about">
+                <div class="section-title"><span class="title-icon">ℹ️</span>حول الإضافة</div>
+                <div class="card about-hero">
+                    <div class="about-logo">M</div>
+                    <div style="font-weight:800;font-size:16px;">Mostafa Style Caption</div>
+                    <div class="text-muted" style="margin-top:4px;">الإصدار 1.0.0</div>
+                </div>
+                <div class="card">
+                    <div class="about-row"><span class="k">المطور</span><span class="v">Mostafa Ahmed</span></div>
+                    <div class="about-row"><span class="k">الإصدار</span><span class="v">1.0.0</span></div>
+                    <div class="about-row"><span class="k">الوضع</span><span class="v">بدون إنترنت — 100%</span></div>
+                    <div class="about-row"><span class="k">المحرك</span><span class="v">Whisper.cpp + FFmpeg</span></div>
+                    <div class="about-row"><span class="k">الترخيص</span><span class="v">ترخيص شخصي</span></div>
+                    <div class="about-row"><span class="k">البيئة</span><span class="v">Adobe CEP — Premiere Pro</span></div>
+                    <div class="about-row"><span class="k">الخصوصية</span><span class="v">لا يتم رفع أي بيانات</span></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════ CEP LIBRARIES ═══════════════ -->
+<script src="lib/CSInterface.js"></script>
+<script src="lib/Vulcan.js"></script>
+
+<!-- ═══════════════ APPLICATION ═══════════════ -->
+<script src="js/main.js"></script>
+<script src="js/ext.js"></script>
+
+<!-- ═══════════════ BOOT GUARD ═══════════════
+     Guarantees the panel always renders, even if Node.js or the host
+     bridge is unavailable. Reports the real fault instead of a blank panel. -->
+<script>
+function bootPanel() {
+    try {
+        if (typeof window.__adobe_cep__ === 'undefined') {
+            throw new Error('window.__adobe_cep__ غير متاح — لم يتم تحميل الإضافة داخل Adobe CEP.');
+        }
+        if (typeof CSInterface === 'undefined') {
+            throw new Error('CSInterface غير مُعرَّف — تحقق من lib/CSInterface.js');
+        }
+        if (typeof onLoaded !== 'function') {
+            throw new Error('onLoaded غير مُعرَّف — تحقق من js/ext.js');
+        }
+        onLoaded();
+    } catch (err) {
+        console.error('[MSC BOOT]', err);
+        var box = document.getElementById('status_area');
+        var msg = document.getElementById('status_message');
+        if (box && msg) {
+            box.className = 'status-area status-error';
+            msg.textContent = 'تعذر تشغيل اللوحة:\n' + err.message;
+        }
+        var dot = document.getElementById('header_status_text');
+        if (dot) dot.textContent = 'خطأ';
+    }
+}
+</script>
+</body>
+</html>

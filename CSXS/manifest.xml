@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ExtensionManifest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   ExtensionBundleId="com.mostafa.stylecaption"
+                   ExtensionBundleName="MostafaStyleCaption"
+                   ExtensionBundleVersion="1.0.0"
+                   Version="7.0">
+
+    <ExtensionList>
+        <Extension Id="com.mostafa.stylecaption.panel" Version="1.0.0" />
+    </ExtensionList>
+
+    <ExecutionEnvironment>
+        <HostList>
+            <!-- Premiere Pro CC 2019 (13.0) and every newer version -->
+            <Host Name="PPRO" Version="[13.0,99.9]" />
+        </HostList>
+        <LocaleList>
+            <Locale Code="All" />
+        </LocaleList>
+        <RequiredRuntimeList>
+            <RequiredRuntime Name="CSXS" Version="9.0" />
+        </RequiredRuntimeList>
+    </ExecutionEnvironment>
+
+    <DispatchInfoList>
+        <Extension Id="com.mostafa.stylecaption.panel">
+            <DispatchInfo>
+                <Resources>
+                    <MainPath>./index.html</MainPath>
+                    <ScriptPath>./MostafaStyleCaption.jsx</ScriptPath>
+                    <CEFCommandLine>
+                        <Parameter>--enable-nodejs</Parameter>
+                        <Parameter>--allow-file-access</Parameter>
+                        <Parameter>--allow-file-access-from-files</Parameter>
+                        <Parameter>--mixed-context</Parameter>
+                        <Parameter>--disable-web-security</Parameter>
+                    </CEFCommandLine>
+                </Resources>
+                <Lifecycle>
+                    <AutoVisible>true</AutoVisible>
+                </Lifecycle>
+                <UI>
+                    <Type>Panel</Type>
+                    <Menu>MostafaStyleCaption</Menu>
+                    <Geometry>
+                        <Size>
+                            <Height>600</Height>
+                            <Width>420</Width>
+                        </Size>
+                        <MinSize>
+                            <Height>400</Height>
+                            <Width>320</Width>
+                        </MinSize>
+                        <MaxSize>
+                            <Height>2400</Height>
+                            <Width>1400</Width>
+                        </MaxSize>
+                    </Geometry>
+                    <!-- Icons intentionally omitted: CEP fails to register a panel
+                         when an <Icon> path cannot be resolved. Drop-in PNGs can be
+                         added later (see icons/README.md) and re-declared here. -->
+                </UI>
+            </DispatchInfo>
+        </Extension>
+    </DispatchInfoList>
+</ExtensionManifest>
