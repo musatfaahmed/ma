@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>Mostafa Style Caption</title>
+    <style id="hostStyle"></style>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body class="default" onload="onLoaded()">
+
+<!-- ═══ APP LAYOUT ═══ -->
+<div class="app-layout">
+
+    <!-- ═══ SIDEBAR ═══ -->
+    <div class="sidebar">
+        <div class="sidebar-logo">M</div>
+        <nav class="sidebar-nav">
+            <div class="nav-item active" data-page="dashboard" onclick="navigateTo('dashboard')">
+                🏠
+                <span class="nav-tooltip">الرئيسية</span>
+            </div>
+            <div class="nav-item" data-page="generate" onclick="navigateTo('generate')">
+                🎬
+                <span class="nav-tooltip">إنشاء الكابشن</span>
+            </div>
+            <div class="nav-item" data-page="styles" onclick="navigateTo('styles')">
+                🎨
+                <span class="nav-tooltip">الأنماط</span>
+            </div>
+            <div class="nav-item" data-page="animations" onclick="navigateTo('animations')">
+                ✨
+                <span class="nav-tooltip">الحركات</span>
+            </div>
+            <div class="nav-item" data-page="export" onclick="navigateTo('export')">
+                📤
+                <span class="nav-tooltip">التصدير</span>
+            </div>
+            <div class="nav-item" data-page="settings" onclick="navigateTo('settings')">
+                ⚙️
+                <span class="nav-tooltip">الإعدادات</span>
+            </div>
+            <div class="nav-item" data-page="statistics" onclick="navigateTo('statistics')">
+                📊
+                <span class="nav-tooltip">الإحصائيات</span>
+            </div>
+            <div class="nav-item" data-page="about" onclick="navigateTo('about')">
+                ℹ️
+                <span class="nav-tooltip">حول الإضافة</span>
+            </div>
+        </nav>
+    </div>
+
+    <!-- ═══ MAIN AREA ═══ -->
+    <div class="main-area">
+
+        <!-- ═══ HEADER ═══ -->
+        <div class="header">
+            <div class="header-right">
+                <span class="header-title">MostafaStyleCaption</span>
+            </div>
+            <div class="header-left">
+                <div class="header-badge offline">
+                    <span class="dot"></span>
+                    وضع غير متصل
+                </div>
+                <div class="header-badge version">v1.0</div>
+                <div class="header-badge" id="header_status">
+                    <span class="dot" id="header_status_dot"></span>
+                    <span id="header_status_text">جاهز</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ CONTENT ═══ -->
+        <div class="content-area">
+
+            <!-- ════════════════ الرئيسية (Dashboard) ════════════════ -->
+            <div class="page-section active" id="page_dashboard">
+                <div class="section-title">
+                    <span class="title-icon">🏠</span>
+                    لوحة المعلومات
+                </div>
+
+                <!-- Dashboard Info Cards -->
+                <div class="dashboard-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">📁 اسم المشروع</div>
+                        <div class="stat-value" id="dash_project">—</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">🎬 اسم السيكونس</div>
+                        <div class="stat-value" id="dash_sequence">—</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">⏱ مدة الفيديو</div>
+                        <div class="stat-value" id="dash_duration">—</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">🌐 لغة الكابشن</div>
+                        <div class="stat-value" id="dash_language">اكتشاف تلقائي</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">🤖 موديل Whisper</div>
+                        <div class="stat-value" id="dash_model">أساسي</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">📡 حالة البرنامج</div>
+                        <div class="stat-value" id="dash_status">جاهز</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">🕐 وقت آخر عملية</div>
+                        <div class="stat-value" id="dash_lastop">—</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">💻 وضع التشغيل</div>
+                        <div class="stat-value">CPU — بدون إنترنت</div>
+                    </div>
+                </div>
+
+                <!-- System Diagnostics -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">🔧</div>
+                        <div>
+                            <div class="card-title">حالة النظام</div>
+                            <div class="card-subtitle">فحص المكونات المطلوبة</div>
+                        </div>
+                    </div>
+                    <div class="diag-panel" id="diagnostics_panel">
+                        <div class="diag-row" id="diag_ffmpeg"><span class="diag-dot"></span> FFmpeg: جاري الفحص...</div>
+                        <div class="diag-row" id="diag_whisper"><span class="diag-dot"></span> Whisper: جاري الفحص...</div>
+                        <div class="diag-row" id="diag_model"><span class="diag-dot"></span> النموذج: جاري الفحص...</div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">⚡</div>
+                        <div>
+                            <div class="card-title">إجراءات سريعة</div>
+                            <div class="card-subtitle">الأوامر الأكثر استخداماً</div>
+                        </div>
+                    </div>
+                    <div class="quick-actions">
+                        <button class="action-btn primary" id="btn_quick_generate" onclick="navigateTo('generate'); setTimeout(function(){ generateCaptions(); }, 300);">
+                            <span class="action-icon">🎬</span>
+                            إنشاء الكابشن
+                        </button>
+                        <button class="action-btn" onclick="importCaptionsToPremiere()">
+                            <span class="action-icon">📥</span>
+                            استيراد للتايم لاين
+                        </button>
+                        <button class="action-btn" onclick="editorExportSRT()">
+                            <span class="action-icon">📤</span>
+                            تصدير SRT
+                        </button>
+                        <button class="action-btn" onclick="exportTXT()">
+                            <span class="action-icon">📄</span>
+                            تصدير TXT
+                        </button>
+                        <button class="action-btn" onclick="refreshDashboard()">
+                            <span class="action-icon">🔄</span>
+                            تحديث المشروع
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ════════════════ إنشاء الكابشن ════════════════ -->
+            <div class="page-section" id="page_generate">
+                <div class="section-title">
+                    <span class="title-icon">🎬</span>
+                    إنشاء الكابشن
+                </div>
+
+                <!-- Active Sequence -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">🎞</div>
+                        <div>
+                            <div class="card-title" id="active_seq">السيكونس النشط: —</div>
+                            <div class="card-subtitle">السيكونس المحدد حالياً في بريمير</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Model Selection -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">🤖</div>
+                        <div>
+                            <div class="card-title">إعدادات التفريغ</div>
+                            <div class="card-subtitle">اختيار النموذج واللغة</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">نموذج Whisper:</label>
+                        <select id="model_size" class="form-select" onchange="checkAllStatus(); updateDashModel();">
+                            <option value="tiny">صغير جداً — 75 ميجا (أسرع)</option>
+                            <option value="base" selected>أساسي — 142 ميجا (متوازن)</option>
+                            <option value="small">صغير — 466 ميجا (أدق)</option>
+                            <option value="medium">متوسط — 1.5 جيجا (دقة عالية)</option>
+                            <option value="large-v3">كبير v3 — 3.1 جيجا (أعلى دقة)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">لغة الكلام:</label>
+                        <select id="language" class="form-select" onchange="updateDashLang();">
+                            <option value="auto">اكتشاف تلقائي</option>
+                            <option value="ar">عربي</option>
+                            <option value="en">إنجليزي</option>
+                        </select>
+                    </div>
+                    <!-- Language detection -->
+                    <div id="language_preview" style="display: none;">
+                        <div class="language-detected">
+                            <label class="form-label">اللغة المكتشفة:</label>
+                            <span id="detected_lang_text">جاري التحليل...</span>
+                            <span id="detected_lang_confidence" class="confidence-badge">—</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Generate Button -->
+                <button class="action-btn primary" id="btn_generate_captions" onclick="generateCaptions()" style="margin-bottom: 14px;">
+                    <span class="action-icon">🚀</span>
+                    توليد الترجمات (بدون إنترنت)
+                </button>
+
+                <!-- Progress Panel -->
+                <div id="progress_section" class="card" style="display: none;">
+                    <div class="card-header">
+                        <div class="card-icon spinner">⏳</div>
+                        <div>
+                            <div class="card-title">جاري المعالجة...</div>
+                            <div class="card-subtitle">يرجى الانتظار</div>
+                        </div>
+                    </div>
+                    <!-- Progress Stages -->
+                    <div class="progress-stages">
+                        <div class="progress-stage" id="stage_extract">
+                            <div class="progress-stage-dot">🎵</div>
+                            <div class="progress-stage-label">استخراج الصوت</div>
+                        </div>
+                        <div class="progress-stage" id="stage_analyze">
+                            <div class="progress-stage-dot">🔍</div>
+                            <div class="progress-stage-label">تحليل الصوت</div>
+                        </div>
+                        <div class="progress-stage" id="stage_create">
+                            <div class="progress-stage-dot">✏️</div>
+                            <div class="progress-stage-label">إنشاء الكابشن</div>
+                        </div>
+                        <div class="progress-stage" id="stage_import">
+                            <div class="progress-stage-dot">📥</div>
+                            <div class="progress-stage-label">إضافة الكابشن</div>
+                        </div>
+                        <div class="progress-stage" id="stage_done">
+                            <div class="progress-stage-dot">✅</div>
+                            <div class="progress-stage-label">انتهى</div>
+                        </div>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div id="progress_bar" class="progress-bar"></div>
+                    </div>
+                    <p id="progress_text" class="progress-text">جاري التحضير...</p>
+                </div>
+
+                <!-- Live Log -->
+                <div class="card" id="log_card" style="display:none;">
+                    <div class="card-header">
+                        <div class="card-icon">📋</div>
+                        <div>
+                            <div class="card-title">سجل العمليات</div>
+                            <div class="card-subtitle">تفاصيل المعالجة المباشرة</div>
+                        </div>
+                    </div>
+                    <div class="log-console" id="log_console"></div>
+                </div>
+
+                <!-- Status Area -->
+                <div id="status_area" class="status-area">
+                    <p id="status_message"></p>
+                </div>
+
+                <!-- Caption Preview -->
+                <div id="caption_preview" class="caption-preview" style="display: none;">
+                    <h2>الترجمات المُولَّدة</h2>
+                    <div id="caption_list" class="caption-list"></div>
+                </div>
+
+                <!-- Import Button (shown after generation) -->
+                <button class="action-btn primary" id="btn_import_captions" onclick="importCaptionsToPremiere()" style="display: none; margin-bottom: 14px;">
+                    <span class="action-icon">📥</span>
+                    إضافة الكابشن إلى التايم لاين
+                </button>
+
+                <!-- ═══ EDITOR PANEL ═══ -->
+                <div id="editor_panel" class="editor-panel" style="display: none;">
+                    <div class="editor-header">
+                        <h2>محرر الترجمات</h2>
+                        <div class="editor-actions">
+                            <button onclick="editorUndo()">تراجع</button>
+                            <button onclick="editorRedo()">إعادة</button>
+                            <button onclick="editorSaveToPremiere()">حفظ في بريمير</button>
+                            <button onclick="closeEditor()">إغلاق</button>
+                        </div>
+                    </div>
+                    <div class="editor-body">
+                        <!-- Caption List -->
+                        <div class="editor-left">
+                            <h3>الترجمات</h3>
+                            <div class="search-box">
+                                <input type="text" id="editor_search" placeholder="بحث في الترجمات..." oninput="filterCaptions()">
+                            </div>
+                            <div id="editor_caption_list" class="editor-caption-list"></div>
+                            <div class="editor-add-row">
+                                <button onclick="editorAddCaption()">+ إضافة</button>
+                                <button onclick="editorDuplicateCaption()">نسخ</button>
+                                <button onclick="editorDeleteCaption()">حذف</button>
+                                <button onclick="editorMergeCaption()">دمج</button>
+                                <button onclick="editorSplitCaption()">تقسيم</button>
+                            </div>
+                            <div class="editor-add-row" style="margin-top:4px;">
+                                <button onclick="editorExportSRT()">تصدير SRT</button>
+                            </div>
+                            <div id="editor_stats" class="editor-stats-bar">—</div>
+                            <div class="shortcuts-hint">Ctrl+Z تراجع · Ctrl+Y إعادة · Ctrl+S حفظ · Del حذف</div>
+                        </div>
+
+                        <!-- Preview + Timing -->
+                        <div class="editor-center">
+                            <div class="editor-preview">
+                                <div id="editor_active_text" class="editor-active-text">معاينة النص</div>
+                            </div>
+                            <div class="editor-timing">
+                                <input type="text" id="editor_time_start" placeholder="00:00:00.000" onchange="editorUpdateTiming()">
+                                <span>←</span>
+                                <input type="text" id="editor_time_end" placeholder="00:00:00.000" onchange="editorUpdateTiming()">
+                            </div>
+                            <textarea id="editor_text_input" class="editor-textarea" placeholder="نص الترجمة..." oninput="editorUpdateText()"></textarea>
+                        </div>
+
+                        <!-- Style Controls -->
+                        <div class="editor-right">
+                            <h3>نمط النص</h3>
+                            <div class="style-row">
+                                <label>الخط</label>
+                                <select id="font_family" onchange="applyFont()">
+                                    <option value="Cairo">Cairo</option>
+                                    <option value="Arial">Arial</option>
+                                    <option value="Segoe UI">Segoe UI</option>
+                                    <option value="Impact">Impact</option>
+                                    <option value="Tahoma">Tahoma</option>
+                                </select>
+                            </div>
+                            <div class="style-row">
+                                <label>الحجم <span id="font_size_value">18px</span></label>
+                                <input type="range" id="font_size" min="10" max="60" value="18" oninput="applyFont()">
+                            </div>
+                            <div class="style-row">
+                                <label>السُمك</label>
+                                <select id="font_weight" onchange="applyFont()">
+                                    <option value="300">خفيف</option>
+                                    <option value="400">عادي</option>
+                                    <option value="600" selected>متوسط</option>
+                                    <option value="700">سميك</option>
+                                    <option value="900">أسود</option>
+                                </select>
+                            </div>
+                            <div class="color-row" style="margin-bottom:6px;">
+                                <label>لون النص</label>
+                                <input type="color" id="text_color" value="#FFFFFF" onchange="applyColor()">
+                            </div>
+                            <div class="color-row" style="margin-bottom:6px;">
+                                <label>لون التمييز</label>
+                                <input type="color" id="highlight_color" value="#FFD700" onchange="applyHighlight()">
+                            </div>
+                            <hr>
+                            <h3>حدود النص</h3>
+                            <div class="style-row">
+                                <label>تفعيل</label>
+                                <input type="checkbox" id="has_stroke" onchange="applyStroke()">
+                            </div>
+                            <div class="color-row" style="margin-bottom:6px;">
+                                <label>لون الحدود</label>
+                                <input type="color" id="stroke_color" value="#000000" onchange="applyStroke()">
+                            </div>
+                            <div class="style-row">
+                                <label>سُمك <span id="stroke_width_val">2px</span></label>
+                                <input type="range" id="stroke_width" min="0" max="6" value="2" oninput="applyStroke()">
+                            </div>
+                            <hr>
+                            <h3>توهج</h3>
+                            <div class="style-row">
+                                <label>تفعيل</label>
+                                <input type="checkbox" id="has_glow" onchange="applyGlow()">
+                            </div>
+                            <div class="color-row" style="margin-bottom:6px;">
+                                <label>لون التوهج</label>
+                                <input type="color" id="glow_color" value="#2680EB" onchange="applyGlow()">
+                            </div>
+                            <hr>
+                            <h3>خلفية</h3>
+                            <div class="style-row">
+                                <label>مربع خلفية</label>
+                                <input type="checkbox" id="bg_box" onchange="applyBgBox()">
+                            </div>
+                            <div class="color-row" style="margin-bottom:6px;">
+                                <label>لون الخلفية</label>
+                                <input type="color" id="bg_color" value="#000000" onchange="applyBgBox()">
+                            </div>
+                            <div class="style-row">
+                                <label>استدارة <span id="corner_val">6px</span></label>
+                                <input type="range" id="corner_radius" min="0" max="30" value="6" oninput="applyBgBox()">
+                            </div>
+                            <hr>
+                            <h3>الموقع والحجم</h3>
+                            <div class="style-row">
+                                <label>X <span id="pos_x_val">50%</span></label>
+                                <input type="range" id="pos_x" min="0" max="100" value="50" oninput="applyPosition()">
+                            </div>
+                            <div class="style-row">
+                                <label>Y <span id="pos_y_val">85%</span></label>
+                                <input type="range" id="pos_y" min="0" max="100" value="85" oninput="applyPosition()">
+                            </div>
+                            <div class="style-row">
+                                <label>مقياس <span id="scale_display">100%</span></label>
+                                <input type="range" id="scale_val" min="50" max="200" value="100" oninput="applyScale()">
+                            </div>
+                            <div class="style-row">
+                                <label>دوران <span id="rotation_display">0°</span></label>
+                                <input type="range" id="rotation_val" min="-180" max="180" value="0" oninput="applyRotation()">
+                            </div>
+                            <hr>
+                            <h3>تمييز الكلمة النشطة</h3>
+                            <div class="style-row">
+                                <label>حجم <span id="word_scale_val">120%</span></label>
+                                <input type="range" id="word_scale" min="100" max="200" value="120" oninput="applyWordHighlight()">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ════════════════ الأنماط (Styles) ════════════════ -->
+            <div class="page-section" id="page_styles">
+                <div class="section-title">
+                    <span class="title-icon">🎨</span>
+                    أنماط الكابشن
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">🎯</div>
+                        <div>
+                            <div class="card-title">أنماط جاهزة</div>
+                            <div class="card-subtitle">اختر نمطاً لتطبيقه على الكابشن</div>
+                        </div>
+                    </div>
+                    <div class="preset-grid" id="preset_grid">
+                        <button class="preset-btn" onclick="applyPresetUI('tiktok', this)">📱 تيك توك</button>
+                        <button class="preset-btn" onclick="applyPresetUI('mrbeast', this)">🎥 يوتيوب</button>
+                        <button class="preset-btn" onclick="applyPresetUI('modern', this)">📸 ريلز</button>
+                        <button class="preset-btn" onclick="applyPresetUI('podcast', this)">🎙 بودكاست</button>
+                        <button class="preset-btn" onclick="applyPresetUI('cinema', this)">🎬 سينمائي</button>
+                        <button class="preset-btn" onclick="applyPresetUI('minimal', this)">✂ قصير</button>
+                        <button class="preset-btn" onclick="applyPresetUI('gaming', this)">🎮 ألعاب</button>
+                        <button class="preset-btn" onclick="applyPresetUI('custom', this)">⚙ مخصص</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">👁</div>
+                        <div>
+                            <div class="card-title">معاينة النمط</div>
+                        </div>
+                    </div>
+                    <div class="editor-preview">
+                        <div id="style_preview_text" class="editor-active-text">نص تجريبي للمعاينة</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">🔤</div>
+                        <div>
+                            <div class="card-title">إعدادات الخط</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">نوع الخط</label>
+                        <select id="style_font" class="form-select" onchange="updateStylePreview()">
+                            <option value="Cairo">Cairo</option>
+                            <option value="Arial">Arial</option>
+                            <option value="Segoe UI">Segoe UI</option>
+                            <option value="Impact">Impact</option>
+                            <option value="Tahoma">Tahoma</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">الحجم: <span id="style_size_val">24px</span></label>
+                        <input type="range" id="style_size" min="10" max="72" value="24" oninput="updateStylePreview()">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">السُمك</label>
+                        <select id="style_weight" class="form-select" onchange="updateStylePreview()">
+                            <option value="300">خفيف</option>
+                            <option value="400">عادي</option>
+                            <option value="600" selected>متوسط</option>
+                            <option value="700">سميك</option>
+                            <option value="900">أسود</option>
+                        </select>
+                    </div>
+                    <div class="color-row" style="margin-bottom:8px;">
+                        <label class="form-label" style="margin:0;flex:1;">لون النص</label>
+                        <input type="color" id="style_color" value="#FFFFFF" onchange="updateStylePreview()">
+                    </div>
+                </div>
+            </div>
+
+            <!-- ════════════════ الحركات (Animations) ════════════════ -->
+            <div class="page-section" id="page_animations">
+                <div class="section-title">
+                    <span class="title-icon">✨</span>
+                    حركات الكابشن
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">🎭</div>
+                        <div>
+                            <div class="card-title">حركة الدخول</div>
+                            <div class="card-subtitle">تأثير ظهور الكابشن</div>
+                        </div>
+                    </div>
+                    <div class="anim-grid">
+                        <button class="anim-btn active" onclick="selectAnim(this,'in','fade')">تلاشي</button>
+                        <button class="anim-btn" onclick="selectAnim(this,'in','pop')">نبثق</button>
+                        <button class="anim-btn" onclick="selectAnim(this,'in','scale')">تكبير</button>
+                        <button class="anim-btn" onclick="selectAnim(this,'in','bounce')">ارتداد</button>
+                        <button class="anim-btn" onclick="selectAnim(this,'in','slideRight')">انزلاق يمين</button>
+                        <button class="anim-btn" onclick="selectAnim(this,'in','slideLeft')">انزلاق يسار</button>
+                        <button class="anim-btn" onclick="selectAnim(this,'in','slideUp')">انزلاق أعلى</button>
+                        <button class="anim-btn" onclick="selectAnim(this,'in','slideDown')">انزلاق أسفل</button>
+                        <button class="anim-btn" onclick="selectAnim(this,'in','typewriter')">آلة كاتبة</button>
+                        <button class="anim-btn" onclick="selectAnim(this,'in','glow')">توهج</button>
+                        <button class="anim-btn" onclick="selectAnim(this,'in','pulse')">نبض</button>
+                        <button class="anim-btn" onclick="selectAnim(this,'in','elastic')">مرن</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">🎭</div>
+                        <div>
+                            <div class="card-title">حركة الخروج</div>
+                            <div class="card-subtitle">تأثير اختفاء الكابشن</div>
+                        </div>
+                    </div>
+                    <div class="anim-grid">
+                        <button class="anim-btn active" onclick="selectAnim(this,'out','fade')">تلاشي</button>
+                        <button class="anim-btn" onclick="selectAnim(this,'out','pop')">نبثق</button>
+                        <button class="anim-btn" onclick="selectAnim(this,'out','scale')">تصغير</button>
+                        <button class="anim-btn" onclick="selectAnim(this,'out','slideRight')">انزلاق يمين</button>
+                        <button class="anim-btn" onclick="selectAnim(this,'out','slideLeft')">انزلاق يسار</button>
+                        <button class="anim-btn" onclick="selectAnim(this,'out','slideUp')">انزلاق أعلى</button>
+                        <button class="anim-btn" onclick="selectAnim(this,'out','slideDown')">انزلاق أسفل</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">👁</div>
+                        <div><div class="card-title">معاينة الحركة</div></div>
+                    </div>
+                    <div class="editor-preview">
+                        <div id="anim_preview_text" class="editor-active-text">نص تجريبي للحركة</div>
+                    </div>
+                    <button class="action-btn" onclick="playAnimPreview()" style="margin-top:8px;">
+                        <span class="action-icon">▶</span>
+                        تشغيل المعاينة
+                    </button>
+                </div>
+            </div>
+
+            <!-- ════════════════ التصدير ════════════════ -->
+            <div class="page-section" id="page_export">
+                <div class="section-title">
+                    <span class="title-icon">📤</span>
+                    التصدير
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">💾</div>
+                        <div>
+                            <div class="card-title">خيارات التصدير</div>
+                            <div class="card-subtitle">تصدير الترجمات بتنسيقات مختلفة</div>
+                        </div>
+                    </div>
+                    <div class="export-grid">
+                        <button class="export-btn" onclick="editorExportSRT()">
+                            <span class="export-icon">📄</span>
+                            تصدير SRT
+                        </button>
+                        <button class="export-btn" onclick="exportTXT()">
+                            <span class="export-icon">📝</span>
+                            تصدير TXT
+                        </button>
+                        <button class="export-btn" onclick="importCaptionsToPremiere()">
+                            <span class="export-icon">📥</span>
+                            استيراد للتايم لاين
+                        </button>
+                        <button class="export-btn" onclick="editorSaveToPremiere()">
+                            <span class="export-icon">🎬</span>
+                            حفظ في بريمير
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ════════════════ الإعدادات ════════════════ -->
+            <div class="page-section" id="page_settings">
+                <div class="section-title">
+                    <span class="title-icon">⚙️</span>
+                    الإعدادات
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">🎨</div>
+                        <div>
+                            <div class="card-title">الثيم</div>
+                            <div class="card-subtitle">اختر مظهر الإضافة</div>
+                        </div>
+                    </div>
+                    <div class="theme-grid">
+                        <div class="theme-swatch active" style="background: linear-gradient(135deg, #1a1a2e, #2680EB);" onclick="setTheme('', this)">
+                            <span class="theme-name">Adobe Dark</span>
+                        </div>
+                        <div class="theme-swatch" style="background: linear-gradient(135deg, #0f0a1a, #a855f7);" onclick="setTheme('purple-neon', this)">
+                            <span class="theme-name">Purple Neon</span>
+                        </div>
+                        <div class="theme-swatch" style="background: linear-gradient(135deg, #0a1628, #0ea5e9);" onclick="setTheme('blue-ocean', this)">
+                            <span class="theme-name">Blue Ocean</span>
+                        </div>
+                        <div class="theme-swatch" style="background: linear-gradient(135deg, #1a120a, #f97316);" onclick="setTheme('orange-sunset', this)">
+                            <span class="theme-name">Orange Sunset</span>
+                        </div>
+                        <div class="theme-swatch" style="background: linear-gradient(135deg, #0a1a14, #10b981);" onclick="setTheme('emerald-green', this)">
+                            <span class="theme-name">Emerald Green</span>
+                        </div>
+                        <div class="theme-swatch" style="background: linear-gradient(135deg, #0a1a1a, #22d3ee);" onclick="setTheme('cyber-cyan', this)">
+                            <span class="theme-name">Cyber Cyan</span>
+                        </div>
+                        <div class="theme-swatch" style="background: linear-gradient(135deg, #1e1e1e, #569cd6);" onclick="setTheme('classic-dark', this)">
+                            <span class="theme-name">Classic Dark</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">🔧</div>
+                        <div><div class="card-title">إعدادات عامة</div></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">لغة الواجهة</label>
+                        <select class="form-select">
+                            <option value="ar" selected>العربية</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">الخط الافتراضي</label>
+                        <select id="settings_default_font" class="form-select">
+                            <option value="Cairo">Cairo</option>
+                            <option value="Arial">Arial</option>
+                            <option value="Segoe UI">Segoe UI</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">موديل Whisper الافتراضي</label>
+                        <select id="settings_model" class="form-select">
+                            <option value="tiny">صغير جداً</option>
+                            <option value="base" selected>أساسي</option>
+                            <option value="small">صغير</option>
+                            <option value="medium">متوسط</option>
+                            <option value="large-v3">كبير v3</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ════════════════ الإحصائيات ════════════════ -->
+            <div class="page-section" id="page_statistics">
+                <div class="section-title">
+                    <span class="title-icon">📊</span>
+                    الإحصائيات
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stats-big-card">
+                        <div class="stats-big-number" id="stat_words">0</div>
+                        <div class="stats-big-label">عدد الكلمات</div>
+                    </div>
+                    <div class="stats-big-card">
+                        <div class="stats-big-number" id="stat_lines">0</div>
+                        <div class="stats-big-label">عدد الأسطر</div>
+                    </div>
+                    <div class="stats-big-card">
+                        <div class="stats-big-number" id="stat_duration">0:00</div>
+                        <div class="stats-big-label">مدة الفيديو</div>
+                    </div>
+                    <div class="stats-big-card">
+                        <div class="stats-big-number" id="stat_segments">0</div>
+                        <div class="stats-big-label">عدد المقاطع</div>
+                    </div>
+                </div>
+
+                <div class="card" style="margin-top:14px;">
+                    <div class="card-header">
+                        <div class="card-icon">🕐</div>
+                        <div><div class="card-title">وقت الإنشاء</div></div>
+                    </div>
+                    <div class="stat-value" id="stat_gen_time" style="font-size:20px;text-align:center;padding:10px;">—</div>
+                </div>
+            </div>
+
+            <!-- ════════════════ حول الإضافة ════════════════ -->
+            <div class="page-section" id="page_about">
+                <div class="section-title">
+                    <span class="title-icon">ℹ️</span>
+                    حول الإضافة
+                </div>
+
+                <div class="card" style="text-align:center;padding:24px;">
+                    <div class="about-logo">M</div>
+                    <div class="about-name">Mostafa Style Caption</div>
+                    <div class="about-version">الإصدار 1.0.0</div>
+                </div>
+
+                <div class="card">
+                    <div class="about-row">
+                        <span class="about-label">المطور</span>
+                        <span class="about-value">Mostafa Ahmed</span>
+                    </div>
+                    <div class="about-row">
+                        <span class="about-label">الإصدار</span>
+                        <span class="about-value">1.0.0</span>
+                    </div>
+                    <div class="about-row">
+                        <span class="about-label">الوضع</span>
+                        <span class="about-value">بدون إنترنت — 100%</span>
+                    </div>
+                    <div class="about-row">
+                        <span class="about-label">المحرك</span>
+                        <span class="about-value">Whisper.cpp + FFmpeg</span>
+                    </div>
+                    <div class="about-row">
+                        <span class="about-label">الترخيص</span>
+                        <span class="about-value">ترخيص شخصي</span>
+                    </div>
+                    <div class="about-row">
+                        <span class="about-label">البيئة</span>
+                        <span class="about-value">Adobe CEP — Premiere Pro</span>
+                    </div>
+                    <div class="about-row">
+                        <span class="about-label">الخصوصية</span>
+                        <span class="about-value">لا يتم رفع أي بيانات</span>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /content-area -->
+    </div><!-- /main-area -->
+</div><!-- /app-layout -->
+
+<!-- Toast Notification -->
+<div class="toast" id="toast_notification"></div>
+
+<!-- ═══ SCRIPTS ═══ -->
+<script src="lib/CSInterface.js"></script>
+<script src="js/ext.js"></script>
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   PREMIUM UI CONTROLLER
+   Navigation, Themes, Dashboard, Statistics
+   Does NOT modify any engine logic from ext.js
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ─── Navigation ─── */
+function navigateTo(page) {
+    var pages = document.querySelectorAll('.page-section');
+    pages.forEach(function(p) { p.classList.remove('active'); });
+    var target = document.getElementById('page_' + page);
+    if (target) target.classList.add('active');
+    var navItems = document.querySelectorAll('.nav-item');
+    navItems.forEach(function(n) { n.classList.remove('active'); });
+    var activeNav = document.querySelector('.nav-item[data-page="' + page + '"]');
+    if (activeNav) activeNav.classList.add('active');
+}
+
+/* ─── Theme System ─── */
+function setTheme(themeName, el) {
+    if (themeName) {
+        document.documentElement.setAttribute('data-theme', themeName);
+    } else {
+        document.documentElement.removeAttribute('data-theme');
+    }
+    var swatches = document.querySelectorAll('.theme-swatch');
+    swatches.forEach(function(s) { s.classList.remove('active'); });
+    if (el) el.classList.add('active');
+    try { localStorage.setItem('msc_theme', themeName || ''); } catch(e) {}
+}
+
+// Load saved theme
+(function() {
+    try {
+        var saved = localStorage.getItem('msc_theme');
+        if (saved) {
+            document.documentElement.setAttribute('data-theme', saved);
+            setTimeout(function() {
+                var swatches = document.querySelectorAll('.theme-swatch');
+                swatches.forEach(function(s) { s.classList.remove('active'); });
+                swatches.forEach(function(s) {
+                    var onclick = s.getAttribute('onclick') || '';
+                    if (onclick.indexOf("'" + saved + "'") !== -1) s.classList.add('active');
+                });
+            }, 100);
+        }
+    } catch(e) {}
+})();
+
+/* ─── Dashboard Updates ─── */
+function refreshDashboard() {
+    if (typeof csInterface !== 'undefined' && csInterface) {
+        csInterface.evalScript('$._MSC_.getActiveSequenceName()', function(name) {
+            document.getElementById('dash_sequence').textContent = name || '—';
+            document.getElementById('active_seq').textContent = 'السيكونس النشط: ' + (name || '—');
+        });
+        try {
+            csInterface.evalScript('app.project.name', function(name) {
+                document.getElementById('dash_project').textContent = name || '—';
+            });
+        } catch(e) {}
+        try {
+            csInterface.evalScript('$._MSC_.getSequenceInfo()', function(r) {
+                try {
+                    var info = JSON.parse(r);
+                    if (info.success && info.duration) {
+                        var dur = parseFloat(info.duration);
+                        if (dur > 0) {
+                            var m = Math.floor(dur / 60);
+                            var s = Math.floor(dur % 60);
+                            document.getElementById('dash_duration').textContent = m + ':' + (s < 10 ? '0' : '') + s;
+                        }
+                    }
+                } catch(e) {}
+            });
+        } catch(e) {}
+    }
+    updateDashModel();
+    updateDashLang();
+    showToast('تم تحديث المعلومات', 'success');
+}
+
+function updateDashModel() {
+    var el = document.getElementById('model_size');
+    if (el) {
+        var text = el.options[el.selectedIndex].text;
+        document.getElementById('dash_model').textContent = text;
+    }
+}
+function updateDashLang() {
+    var el = document.getElementById('language');
+    if (el) {
+        var map = { 'auto': 'اكتشاف تلقائي', 'ar': 'عربي', 'en': 'إنجليزي' };
+        document.getElementById('dash_language').textContent = map[el.value] || el.value;
+    }
+}
+
+/* ─── Toast Notifications ─── */
+function showToast(msg, type) {
+    var toast = document.getElementById('toast_notification');
+    toast.textContent = msg;
+    toast.className = 'toast ' + (type || '') + ' show';
+    setTimeout(function() { toast.classList.remove('show'); }, 2500);
+}
+
+/* ─── Style Preset UI ─── */
+function applyPresetUI(name, btn) {
+    var btns = document.querySelectorAll('#preset_grid .preset-btn');
+    btns.forEach(function(b) { b.classList.remove('active'); });
+    if (btn) btn.classList.add('active');
+    var preview = document.getElementById('style_preview_text');
+    if (!preview) return;
+    preview.style.cssText = 'font-size:24px;font-weight:600;color:#FFF;text-align:center;line-height:1.3;padding:8px 12px;text-shadow:0 2px 8px rgba(0,0,0,0.8);max-width:100%;word-break:break-word;';
+    switch(name) {
+        case 'tiktok':
+            preview.style.fontWeight = '900';
+            preview.style.fontSize = '28px';
+            preview.style.textTransform = 'uppercase';
+            preview.style.webkitTextStroke = '2px #000';
+            break;
+        case 'podcast':
+            preview.style.fontWeight = '400';
+            preview.style.fontSize = '20px';
+            preview.style.fontStyle = 'italic';
+            preview.style.backgroundColor = '#000000AA';
+            preview.style.borderRadius = '6px';
+            break;
+        case 'mrbeast':
+            preview.style.fontWeight = '900';
+            preview.style.fontSize = '32px';
+            preview.style.color = '#FFD700';
+            preview.style.webkitTextStroke = '3px #000';
+            preview.style.textTransform = 'uppercase';
+            break;
+        case 'modern':
+            preview.style.fontWeight = '600';
+            preview.style.fontSize = '22px';
+            preview.style.backgroundColor = '#2680EBCC';
+            preview.style.borderRadius = '8px';
+            preview.style.padding = '10px 16px';
+            break;
+        case 'gaming':
+            preview.style.fontWeight = '900';
+            preview.style.fontSize = '26px';
+            preview.style.color = '#0F0';
+            preview.style.textShadow = '0 0 10px #0F0, 0 0 20px #0F0';
+            break;
+        case 'cinema':
+            preview.style.fontWeight = '300';
+            preview.style.fontSize = '18px';
+            preview.style.letterSpacing = '2px';
+            preview.style.color = '#FFFFFFCC';
+            break;
+        case 'minimal':
+            preview.style.fontWeight = '400';
+            preview.style.fontSize = '16px';
+            preview.style.color = '#FFFFFF99';
+            break;
+    }
+    if (typeof applyPreset === 'function') applyPreset(name);
+    showToast('تم تطبيق النمط', 'success');
+}
+
+/* ─── Style Preview ─── */
+function updateStylePreview() {
+    var preview = document.getElementById('style_preview_text');
+    if (!preview) return;
+    var font = document.getElementById('style_font').value;
+    var size = document.getElementById('style_size').value;
+    var weight = document.getElementById('style_weight').value;
+    var color = document.getElementById('style_color').value;
+    document.getElementById('style_size_val').textContent = size + 'px';
+    preview.style.fontFamily = font;
+    preview.style.fontSize = size + 'px';
+    preview.style.fontWeight = weight;
+    preview.style.color = color;
+}
+
+/* ─── Animation System ─── */
+function selectAnim(btn, direction, name) {
+    var grid = btn.parentElement;
+    grid.querySelectorAll('.anim-btn').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    showToast('حركة ' + (direction === 'in' ? 'الدخول' : 'الخروج') + ': ' + btn.textContent, 'success');
+}
+
+function playAnimPreview() {
+    var el = document.getElementById('anim_preview_text');
+    if (!el) return;
+    el.style.transition = 'none';
+    el.style.opacity = '0';
+    el.style.transform = 'scale(0.5) translateY(30px)';
+    setTimeout(function() {
+        el.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+        el.style.opacity = '1';
+        el.style.transform = 'scale(1) translateY(0)';
+    }, 100);
+}
+
+/* ─── Statistics Updates ─── */
+var _generationStartTime = 0;
+function updateStats(segments) {
+    if (!segments || !segments.length) return;
+    var totalWords = 0;
+    var totalDur = 0;
+    segments.forEach(function(s) {
+        if (s.text) totalWords += s.text.split(/\s+/).filter(function(w) { return w.length > 0; }).length;
+        totalDur = Math.max(totalDur, s.end || 0);
+    });
+    document.getElementById('stat_words').textContent = totalWords;
+    document.getElementById('stat_lines').textContent = segments.length;
+    document.getElementById('stat_segments').textContent = segments.length;
+    var m = Math.floor(totalDur / 60);
+    var s = Math.floor(totalDur % 60);
+    document.getElementById('stat_duration').textContent = m + ':' + (s < 10 ? '0' : '') + s;
+    if (_generationStartTime > 0) {
+        var elapsed = ((Date.now() - _generationStartTime) / 1000).toFixed(1);
+        document.getElementById('stat_gen_time').textContent = elapsed + ' ثانية';
+    }
+    var now = new Date();
+    document.getElementById('dash_lastop').textContent = now.getHours() + ':' + (now.getMinutes() < 10 ? '0' : '') + now.getMinutes();
+}
+
+/* ─── Live Log System ─── */
+function addLogEntry(message, type) {
+    var console = document.getElementById('log_console');
+    var card = document.getElementById('log_card');
+    if (!console || !card) return;
+    card.style.display = 'block';
+    var now = new Date();
+    var time = now.getHours() + ':' + (now.getMinutes() < 10 ? '0' : '') + now.getMinutes() + ':' + (now.getSeconds() < 10 ? '0' : '') + now.getSeconds();
+    var entry = document.createElement('div');
+    entry.className = 'log-entry ' + (type || 'info');
+    entry.innerHTML = '<span class="log-time">' + time + '</span><span class="log-msg">' + message + '</span>';
+    console.appendChild(entry);
+    console.scrollTop = console.scrollHeight;
+    while (console.children.length > 100) console.removeChild(console.firstChild);
+}
+
+/* ─── Progress Stage Updates ─── */
+function updateProgressStages(percentage) {
+    var stages = [
+        { id: 'stage_extract', min: 0, max: 25 },
+        { id: 'stage_analyze', min: 25, max: 35 },
+        { id: 'stage_create', min: 35, max: 80 },
+        { id: 'stage_import', min: 80, max: 95 },
+        { id: 'stage_done', min: 95, max: 100 }
+    ];
+    stages.forEach(function(s) {
+        var el = document.getElementById(s.id);
+        if (!el) return;
+        el.classList.remove('active', 'done');
+        if (percentage >= s.max) el.classList.add('done');
+        else if (percentage >= s.min) el.classList.add('active');
+    });
+}
+
+/* ─── Hook Engine UI ─── */
+var _origUpdateProgress = null;
+var _origShowProgress = null;
+var _origSetButtonState = null;
+var _origShowStatus = null;
+var _origOpenEditor = null;
+var _origLog = null;
+
+function hookEngineUI() {
+    if (typeof updateProgress === 'function' && !_origUpdateProgress) {
+        _origUpdateProgress = updateProgress;
+        window.updateProgress = function(pct, msg) {
+            _origUpdateProgress(pct, msg);
+            updateProgressStages(pct);
+            addLogEntry(msg, pct >= 100 ? 'success' : 'info');
+            document.getElementById('header_status_text').textContent = pct >= 100 ? 'مكتمل ✓' : 'يعالج... ' + pct + '%';
+            document.getElementById('header_status_dot').style.background = pct >= 100 ? 'var(--success)' : 'var(--warning)';
+        };
+    }
+    if (typeof showProgress === 'function' && !_origShowProgress) {
+        _origShowProgress = showProgress;
+        window.showProgress = function(show) {
+            _origShowProgress(show);
+            if (show) {
+                _generationStartTime = Date.now();
+                addLogEntry('بدء عملية التوليد...', 'info');
+                document.querySelectorAll('.progress-stage').forEach(function(s) { s.classList.remove('active', 'done'); });
+            }
+        };
+    }
+    if (typeof setButtonState === 'function' && !_origSetButtonState) {
+        _origSetButtonState = setButtonState;
+        window.setButtonState = function(enabled) {
+            _origSetButtonState(enabled);
+            var quickBtn = document.getElementById('btn_quick_generate');
+            if (quickBtn) quickBtn.disabled = !enabled;
+            if (enabled) {
+                document.getElementById('header_status_text').textContent = 'جاهز';
+                document.getElementById('header_status_dot').style.background = 'var(--success)';
+                document.getElementById('dash_status').textContent = 'جاهز';
+            } else {
+                document.getElementById('dash_status').textContent = 'يعالج...';
+            }
+        };
+    }
+    if (typeof showStatus === 'function' && !_origShowStatus) {
+        _origShowStatus = showStatus;
+        window.showStatus = function(msg, type) {
+            _origShowStatus(msg, type);
+            addLogEntry(msg.substring(0, 100), type === 'success' ? 'success' : type === 'error' ? 'error' : 'info');
+            if (type === 'success') showToast('اكتمل بنجاح ✓', 'success');
+            if (type === 'error') showToast('حدث خطأ', 'error');
+        };
+    }
+    if (typeof openEditor === 'function' && !_origOpenEditor) {
+        _origOpenEditor = openEditor;
+        window.openEditor = function(segments) {
+            _origOpenEditor(segments);
+            updateStats(segments);
+        };
+    }
+    if (typeof log === 'function' && !_origLog) {
+        _origLog = log;
+        window.log = function(m) {
+            _origLog(m);
+            if (m.indexOf('Progress:') === -1) addLogEntry(m, 'info');
+        };
+    }
+}
+
+setTimeout(hookEngineUI, 200);
+setTimeout(function() { refreshDashboard(); }, 500);
+
+function filterCaptions() {
+    if (typeof renderEditorList === 'function') renderEditorList();
+}
+
+/* ─── Export TXT Function ─── */
+function exportTXT() {
+    if (typeof editorSegments === 'undefined' || editorSegments.length === 0) {
+        showToast('لا توجد ترجمات للتصدير', 'warning');
+        return;
+    }
+    
+    var txt = '';
+    editorSegments.forEach(function(s) {
+        txt += s.text + '\n';
+    });
+    
+    try {
+        var txtPath = path.join(os.tmpdir(), 'msc_export_' + Date.now() + '.txt');
+        fs.writeFileSync(txtPath, '\uFEFF' + txt, 'utf8');
+        
+        if (process.platform === 'win32') {
+            childProcess.exec('explorer /select,"' + txtPath + '"');
+        }
+        
+        if (typeof showStatus === 'function') {
+            showStatus('✓ تم تصدير TXT بنجاح!\n\n' + txtPath, 'success');
+        }
+        showToast('تم تصدير TXT بنجاح', 'success');
+    } catch (e) {
+        showToast('فشل التصدير: ' + e.message, 'error');
+    }
+}
+
+/* ─── Show Import Button after generation ─── */
+function showImportButtonUI() {
+    var btn = document.getElementById('btn_import_captions');
+    if (btn) {
+        btn.style.display = 'flex';
+        btn.disabled = false;
+    }
+}
+
+/* ─── Hook to show import button after successful generation ─── */
+var _origHandleResult = null;
+function hookHandleResult() {
+    if (typeof handleTranscriptionResult === 'function' && !_origHandleResult) {
+        _origHandleResult = handleTranscriptionResult;
+        // The function in ext.js already calls showImportButton()
+    }
+}
+setTimeout(hookHandleResult, 300);
+</script>
+</body>
+</html>
